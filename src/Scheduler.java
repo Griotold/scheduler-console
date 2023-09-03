@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 
 public class Scheduler {
-
-    public Event[] events = new Event[100];
+    private int capacity = 10;
+    public Event[] events = new Event[capacity];
     public int n = 0;
     private Scanner kb;
     public void processCommand() {
@@ -26,7 +26,7 @@ public class Scheduler {
                     handleAddDeadlineEvent();
                 }
             } else if (command.equals("list")) {
-
+                handleList();
             } else if (command.equals("show")) {
 
             } else if (command.equals("exit")) {
@@ -34,6 +34,12 @@ public class Scheduler {
             }
         }
         kb.close();
+    }
+
+    private void handleList() {
+        for(int i = 0; i < n; i++){
+            System.out.println("    " + events[i].toString());
+        }
     }
 
     private void handleAddOneDayEvent() {
@@ -47,8 +53,25 @@ public class Scheduler {
 
         OneDayEvent oneDayEvent = new OneDayEvent(title, date);
 
-        System.out.println(oneDayEvent);
+//        System.out.println(oneDayEvent);
+        addEvent(oneDayEvent);
+
+    }
+
+    private void addEvent(OneDayEvent oneDayEvent) {
+        if (n >= capacity) {
+            reallocate();
+        }
         events[n++] = oneDayEvent;
+    }
+
+    private void reallocate() {
+        Event[] temp = new Event[capacity * 2];
+        for(int i = 0; i < n; i++){
+            temp[i] = events[i];
+            events = temp;
+            capacity *= 2;
+        }
     }
 
     private MyDate customParseDateString(String dateString) {

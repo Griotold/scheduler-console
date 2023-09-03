@@ -12,9 +12,6 @@ public class OneDayEvent extends Event{
 
     @Override
     public String toString() {
-        return "OneDayEvent{" +
-                "title='" + title + '\'' +
-                ", date=" + date +
-                '}';
+        return title + ", " + date;
     }
 }
