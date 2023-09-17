@@ -3,7 +3,7 @@ package genericexercise;
  * 다양한 재료를 사용한느 3D 프린터를 설계
  *  여기서 T를 Type Parameter : 자료형 매개변수라고 한다.
  * */
-public class GenericPrinter<T>{
+public class GenericPrinter<T extends Material>{
     private T material;
     public void setMaterial(T material) {
         this.material = material;
@@ -17,4 +17,9 @@ public class GenericPrinter<T>{
     public String toString() {
         return material.toString();
     }
+
+    public void printing() {
+        material.doPrinting(); // 상위 클래스의 doPrinting 호출
+    }
+
 }
