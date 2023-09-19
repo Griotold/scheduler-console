@@ -19,6 +19,7 @@ public class MemberArrayListTest {
         memberArrayList.showAllMember();
 
         memberArrayList.removeMember(memberHong.getMemberId());
+        memberArrayList.removeMemberV2(memberLee.getMemberId());
         memberArrayList.showAllMember();
 
         Member memberJo = new Member(1005, "조해성");
