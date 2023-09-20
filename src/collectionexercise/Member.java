@@ -2,7 +2,7 @@ package collectionexercise;
 
 import java.util.Objects;
 
-public class Member {
+public class Member implements Comparable<Member>{
     private int memberId;
     private String memberName;
 
@@ -43,5 +43,22 @@ public class Member {
     @Override
     public int hashCode() {
         return Objects.hash(memberId);
+    }
+    /**
+     * compareTo() 재정의
+     * 추가한 회원 아이디와 매개변수로 받은 회원 아이디를 비교
+     * 오름차순 정렬
+     * 리턴값이 양수라면 새로 추가된 객체는 오른쪽으로 간다
+     * */
+//    @Override
+//    public int compareTo(Member member) {
+//        return (this.memberId - member.memberId);
+//    }
+    /**
+     * 회원 이름순으로 정렬
+     * */
+    @Override
+    public int compareTo(Member member) {
+        return this.memberName.compareTo(member.memberName);  //String 클래스에 compareTo() 가 정의되어 있으므로 활용
     }
 }
