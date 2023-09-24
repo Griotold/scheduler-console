@@ -16,9 +16,11 @@ public class ThrowsException {
         try {
             test.loadClass("a.txt", "java.lang.String");
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
