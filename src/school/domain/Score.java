@@ -1,4 +1,4 @@
-package school;
+package school.domain;
 
 public class Score {
     private int studentId;

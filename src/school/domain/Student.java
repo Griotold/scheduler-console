@@ -1,4 +1,4 @@
-package school;
+package school.domain;
 
 import java.util.ArrayList;
 
