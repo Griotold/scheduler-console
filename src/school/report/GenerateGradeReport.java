@@ -7,6 +7,7 @@ import school.domain.Subject;
 import school.grade.BasicEvaluation;
 import school.grade.GradeEvaluation;
 import school.grade.MajorEvaluation;
+import school.grade.PassFailEvaluation;
 import school.utils.Define;
 
 import java.util.ArrayList;
@@ -51,29 +52,33 @@ public class GenerateGradeReport {
             buffer.append(student.getMajorSubject().getSubjectName() + "\t");
             buffer.append(" | ");
 
-            getScoreGrade(student, subject.getSubjectId());  //학생별 해당과목 학점 계산
+            getScoreGrade(student, subject);  //학생별 해당과목 학점 계산
             buffer.append("\n");
             buffer.append(LINE);
         }
     }
 
-    private void getScoreGrade(Student student, int subjectId) {
+    public void getScoreGrade(Student student, Subject subject){
+
         ArrayList<Score> scoreList = student.getScoreList();
         int majorId = student.getMajorSubject().getSubjectId();
 
-        GradeEvaluation[] gradeEvaluation = {new BasicEvaluation(), new MajorEvaluation()};  //학점 평가 클래스들
+        GradeEvaluation[] gradeEvaluation = {new BasicEvaluation(), new MajorEvaluation(), new PassFailEvaluation()};  //학점 평가 클래스들
 
         for(int i=0; i<scoreList.size(); i++){  // 학생이 가진 점수들
 
             Score score = scoreList.get(i);
-            if(score.getSubject().getSubjectId() == subjectId) {  // 현재 학점을 산출할 과목
+            if(score.getSubject().getSubjectId() == subject.getSubjectId()) {  // 현재 학점을 산출할 과목
                 String grade;
 
-                if(score.getSubject().getSubjectId() == majorId) {
-                    grade = gradeEvaluation[Define.SAB_TYPE].getGrade(score.getPoint()); // 중점 과목인 경우
+                if(subject.getGradeType() == Define.PF_TYPE) {
+                    grade = gradeEvaluation[Define.PF_TYPE].getGrade(score.getPoint());
                 }
                 else {
-                    grade = gradeEvaluation[Define.AB_TYPE].getGrade(score.getPoint()); // 중점 과목이 아닌 경우
+                    if(score.getSubject().getSubjectId() == majorId)  // 중점 과목인 경우
+                        grade = gradeEvaluation[Define.SAB_TYPE].getGrade(score.getPoint());//중점 과목 학점 평가 방법
+                    else
+                        grade = gradeEvaluation[Define.AB_TYPE].getGrade(score.getPoint()); // 중점 과목이 아닌 경우
                 }
                 buffer.append(score.getPoint());
                 buffer.append(":");
